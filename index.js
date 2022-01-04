@@ -20,8 +20,14 @@ const client = new MongoClient(uri, {
 async function run() {
     try {
       await client.connect();
-      const database = client.db("");
-      const courseCollection = database.collection("");
+      const database = client.db("courseLance");
+      const courseCollection = database.collection("courses");
+
+      // get all courses
+      app.get('/courses', async(req,res)=>{
+        const courses = await courseCollection.find({}).toArray();
+      res.send(courses);
+      })
      
     } finally {
       //   await client.close();
